@@ -9,7 +9,12 @@ package hosp;
  *
  * @author Anubhav
  */
+
 import java.awt.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.*;
 public class medcomplete_rec extends javax.swing.JFrame {
 
@@ -21,6 +26,8 @@ public class medcomplete_rec extends javax.swing.JFrame {
         Dimension dim=Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         setTitle("Stock Record");
+        
+        textArea.setText(getAllStockDetails());
     }
 
     /**
@@ -39,7 +46,7 @@ public class medcomplete_rec extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        textArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,12 +68,12 @@ public class medcomplete_rec extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setText("Expiry Date");
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 204), new java.awt.Color(102, 102, 102)));
-        jScrollPane1.setViewportView(jTextArea1);
+        textArea.setEditable(false);
+        textArea.setColumns(20);
+        textArea.setLineWrap(true);
+        textArea.setRows(5);
+        textArea.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 204), new java.awt.Color(102, 102, 102)));
+        jScrollPane1.setViewportView(textArea);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -154,6 +161,43 @@ public class medcomplete_rec extends javax.swing.JFrame {
             }
         });
     }
+    
+    private static String getAllStockDetails() {
+        ResultSet rs = null;
+        Connection connection = null;
+        Statement statement = null; 
+        StringBuffer sb = new StringBuffer();
+        String query = "SELECT * FROM new_stock_table order by id desc";
+        try {           
+            connection = DatabaseHelper.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(query);
+            
+                while(rs.next()) {
+                    
+                    sb.append("Name: " + rs.getString("name") + ", ");
+                    sb.append("Batch_no: " +rs.getString("batch_no")+", ");
+                    sb.append("Quantity: " +rs.getInt("quantity")+", ");
+                    sb.append("Expiry Date: " 
+                            + rs.getInt("date_of_expiry") + " " 
+                            + rs.getString("month_of_expiry") + " " 
+                            + rs.getInt("year_of_expiry")+"\n");
+                }
+                
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    System.out.println(e);
+                }
+            }
+        }
+        return sb.toString();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -163,6 +207,7 @@ public class medcomplete_rec extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea textArea;
     // End of variables declaration//GEN-END:variables
+
 }
