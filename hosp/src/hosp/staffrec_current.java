@@ -10,6 +10,10 @@ package hosp;
  * @author Anubhav
  */
 import java.awt.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.*;
 public class staffrec_current extends javax.swing.JFrame {
 
@@ -21,6 +25,52 @@ public class staffrec_current extends javax.swing.JFrame {
         Dimension dim=Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         setTitle("Staff Record");
+        textArea.setText(getAllStaffDetails());
+    }
+    
+    private static String getAllStaffDetails() {
+        ResultSet rs = null;
+        Connection connection = null;
+        Statement statement = null; 
+        StringBuffer sb = new StringBuffer();
+        String query = "SELECT * FROM staff_table order by id desc";
+        try {           
+            connection = DatabaseHelper.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(query);
+            
+                while(rs.next()) {
+                    sb.append("Id: " + rs.getInt("id")+", ");
+                    sb.append("Name: " + rs.getString("name") + ", ");
+                    sb.append("Gender: " + rs.getString("gender") + ", ");
+                    sb.append("Designation: " + rs.getString("designation") + ", ");
+                    sb.append("Birth Date: " 
+                            + rs.getInt("date_of_birth") + " " 
+                            + rs.getString("month_of_birth") + " " 
+                            + rs.getInt("year_of_birth")+", ");
+                    sb.append("Joining Date: " 
+                            + rs.getInt("date_of_joining") + " " 
+                            + rs.getString("month_of_joining") + " " 
+                            + rs.getInt("year_of_joining")+", ");
+                    sb.append("Termination Date: " 
+                            + rs.getInt("date_of_termination") + " " 
+                            + rs.getString("month_of_termination") + " " 
+                            + rs.getInt("year_of_termination")+"\n");
+                }
+                
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    System.out.println(e);
+                }
+            }
+        }
+        return sb.toString();
     }
 
     /**
@@ -35,82 +85,17 @@ public class staffrec_current extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollBar1 = new javax.swing.JScrollBar();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
-        jTextField11 = new javax.swing.JTextField();
-        jTextField12 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 204, 153));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(jScrollBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(579, 0, -1, 360));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 255));
         jLabel1.setText("CURRENT STAFF");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 11, -1, -1));
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel2.setText("NAME");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 47, -1, -1));
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel3.setText("DESIGNATION");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(376, 47, -1, -1));
-
-        jTextField1.setEditable(false);
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 81, 146, -1));
-
-        jTextField2.setEditable(false);
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 122, 146, -1));
-
-        jTextField3.setEditable(false);
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 163, 146, -1));
-
-        jTextField4.setEditable(false);
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 204, 146, -1));
-
-        jTextField5.setEditable(false);
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 245, 146, -1));
-
-        jTextField6.setEditable(false);
-        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 286, 146, -1));
-
-        jTextField7.setEditable(false);
-        jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(376, 81, 83, -1));
-
-        jTextField8.setEditable(false);
-        jPanel1.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(376, 122, 83, -1));
-
-        jTextField9.setEditable(false);
-        jPanel1.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(376, 163, 83, -1));
-
-        jTextField10.setEditable(false);
-        jPanel1.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(376, 204, 83, -1));
-
-        jTextField11.setEditable(false);
-        jPanel1.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(376, 245, 83, -1));
-
-        jTextField12.setEditable(false);
-        jPanel1.add(jTextField12, new org.netbeans.lib.awtextra.AbsoluteConstraints(376, 286, 83, -1));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton1.setText("OK");
@@ -120,37 +105,42 @@ public class staffrec_current extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(276, 326, -1, -1));
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton2.setText("EDIT");
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 80, -1, -1));
+        textArea.setColumns(20);
+        textArea.setRows(5);
+        jScrollPane1.setViewportView(textArea);
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton3.setText("EDIT");
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 121, -1, -1));
-
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton4.setText("EDIT");
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 162, -1, -1));
-
-        jButton5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton5.setText("EDIT");
-        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 203, -1, -1));
-
-        jButton6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton6.setText("EDIT");
-        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 244, -1, -1));
-
-        jButton7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton7.setText("EDIT");
-        jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 285, -1, -1));
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(239, 239, 239)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(37, 37, 37)
+                                .addComponent(jButton1)))
+                        .addGap(224, 224, 224))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)))
+                .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -208,28 +198,10 @@ public class staffrec_current extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollBar jScrollBar1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea textArea;
     // End of variables declaration//GEN-END:variables
 }
