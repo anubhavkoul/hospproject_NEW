@@ -84,7 +84,8 @@ public class stockrec extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jRadioButton1)
                     .addComponent(jRadioButton4)
-                    .addComponent(jRadioButton3)))
+                    .addComponent(jRadioButton3))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

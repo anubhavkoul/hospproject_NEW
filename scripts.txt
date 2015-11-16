@@ -1,0 +1,58 @@
+1) create database tester;
+
+2) use tester;
+
+3) 
+
+ create table register_table(id int primary key,
+ name varchar(20),
+ date_of_birth int,
+ month_of_birth varchar(10),
+ year_of_birth int,
+ gender varchar(7),
+ address varchar(30),
+ city varchar(10),
+ state varchar(10),
+ telephone_no varchar(11),
+ mobile_no varchar(11),
+ email varchar(20),
+ ward_number varchar(10),
+ blood_group varchar(4),
+ previous_ailments varchar(30),
+ date_of_admit int,
+ month_of_admit varchar(10),
+ year_of_admit int);
+
+
+4)
+
+ create table new_stock_table(
+ id int primary key,
+ name varchar(20),
+ batch_no varchar(10),
+ quantity int,
+ date_of_expiry int,
+ month_of_expiry varchar(10),
+ year_of_expiry int);
+
+5) 
+
+ create table staff_table(
+ id int primary key,
+ name varchar(20),
+ date_of_birth int,
+ month_of_birth varchar(10),
+ year_of_birth int,
+ gender varchar(7),
+ address varchar(30),
+ date_of_joining int,
+ month_of_joining varchar(10),
+ year_of_joining int,
+ date_of_termination int,
+ month_of_termination varchar(10),
+ year_of_termination int,
+ designation varchar(10));
+
+
+4) Run and Debug project
+
